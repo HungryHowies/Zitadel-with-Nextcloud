@@ -4,7 +4,7 @@ Installing and configuring Nextcloud  to authenacate with SAML against Zitadel
 
 ## Overview
 
-The following documentation discribes the How-to for installing nextcloud (Lastest version) and configurations needed for HTTPS and the connection to authenicate against Zitadel. This setup is a Ubuntu-Server core installation, this means it has the minimum amount packages and/or depenedncies (i.e., install as you go). Its easier to install the correct packages first, then to  disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2.
+The following documentation discribes the How-to for installing nextcloud (Lastest version) and configurations needed for HTTPS and the connection to authenicate against Zitadel. This setup is a Ubuntu-Server core installation, this means it has the minimum amount packages and/or depenedncies (i.e., install as you go). Its easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2.
 
 ## Prerequisite
 
@@ -189,9 +189,8 @@ configure Nextcloud Site.
       ServerName nextcloud.domain.com
       Redirect / https://nextcloud.domain.com/
 </VirtualHost>
-<IfModule mod_ssl.c>
    <VirtualHost *:443>
-        ServerAdmin webmaster@localhost
+        ServerAdmin someuser@localhost
         DocumentRoot "/var/www/nextcloud"
       <Directory "/var/www/nextcloud">
         Options Indexes FollowSymLinks
@@ -218,6 +217,22 @@ Enable Nextlcoud site
 
 ```
 sudo a2ensite nextcloud
+```
+Use the occ command to complete your installation. This takes the place of running the graphical Installation Wizard.
+
+Chnage Directory.
+
+```
+cd /var/www/nextcloud/
+```
+
+Execute OCC command.
+
+```
+sudo -u www-data php occ  maintenance:install \
+--database='mysql' --database-name='nextcloud' \
+--database-user='root' --database-pass='password' \
+--admin-user='admin' --admin-pass='password'
 ```
 
 
