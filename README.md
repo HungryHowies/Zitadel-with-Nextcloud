@@ -250,7 +250,39 @@ sudo -u www-data php occ  maintenance:install \
 --database-user='root' --database-pass='password' \
 --admin-user='admin' --admin-pass='password'
 ```
+## Nextcloud Config.php
 
+If "Localhost is not being used  may need to adjust these lines the config.php.
+
+Before:
+```
+'trusted_domains' =>
+  array (
+    0 => 'localhost',
+```
+```
+'overwrite.cli.url' => 'http://localhost',
+```
+
+After:
+```
+'trusted_domains' =>
+  array (
+    0 => 'localhost','nextcloud.domain.com',
+```
+
+```
+'overwrite.cli.url' => 'https://nextcloud.domain.com',
+```
+Restart Apache2 service.
+
+```
+systemctl restart apache2
+```
+Login 
+```
+https://nextcloud.domain.com
+```
 
 ## Nextcloud SSO Web UI configuration
 
