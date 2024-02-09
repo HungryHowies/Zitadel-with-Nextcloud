@@ -51,54 +51,82 @@ Permissions
 sudo chown -R www-data:www-data /var/www/nextcloud
 ```
 
-Certificates with Let's encrypt.
+Install Let's encrypt.
 ```
 sudo apt install certbot python3-certbot-apache
+```
+Create Certificates.
+```
 sudo certbot --apache
+```
+Restart Apache2
+```
 systemctl restart apache2
-There might be multiple Sites enabled so I disabled the default sites ( i.e., 000-default.conf ,etc...) .
+```
 Disable site
+```
 sudo a2dissite 000-default.conf
+```
 Create NextCloud site and enable it.
+```
 vi /etc/apache2/sites-available/nextcloud.conf
-sudo chown -R www-data:www-data /var/www/html
-sudo a2ensite nextcloud
-Result should look like this.
-root@nextcloud:/etc/apache2/sites-available# cat nextcloud.conf
+```
+configure Nextcloud Site
+```
 <VirtualHost *:80>
-ServerName nextcloud.hungry-howard.com
-Redirect / https://nextcloud.hungry-howard.com/
+      ServerName nextcloud.hungry-howard.com
+      Redirect / https://nextcloud.domain.com/
 </VirtualHost>
 <IfModule mod_ssl.c>
-<VirtualHost *:443>
-ServerAdmin webmaster@localhost
-DocumentRoot "/var/www/nextcloud"
-<Directory "/var/www/nextcloud">
-Options Indexes FollowSymLinks
-AllowOverride All
-Require all granted
+   <VirtualHost *:443>
+        ServerAdmin webmaster@localhost
+        DocumentRoot "/var/www/nextcloud"
+      <Directory "/var/www/nextcloud">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
 </Directory>
-ErrorLog ${APACHE_LOG_DIR}/error.log
-CustomLog ${APACHE_LOG_DIR}/access.log combined
-SSLEngine on
-ServerName nextcloud.hungry-howard.com
-SSLCertificateFile /etc/letsencrypt/live/nextcloud.hungry-howard.com/fullchain.pem
-SSLCertificateKeyFile /etc/letsencrypt/live/nextcloud.hungry-howard.com/privkey.pem
-Include /etc/letsencrypt/options-ssl-apache.conf
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        SSLEngine on
+        ServerName nextcloud.hungry-howard.com
+        SSLCertificateFile /etc/letsencrypt/live/nextcloud.domain.com/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/nextcloud.domain.com/privkey.pem
+        Include /etc/letsencrypt/options-ssl-apache.conf
 </VirtualHost>
-</IfModule>
-Nextcloud SSO Web UI configuration
+```
+
+Set permisions.
+```
+sudo chown -R www-data:www-data /var/www/html
+```
+Enable Nextlcoud site
+```
+sudo a2ensite nextcloud
+```
+Result should look like this.
+root@nextcloud:/etc/apache2/sites-available# cat nextcloud.conf
+
+## Nextcloud SSO Web UI configuration
+
 Login to Nextcloud as the system administrator.
-Prepare your Nextcloud instance for SSO & SAML Authentication. Enable APP called SSO & SAML
-authentication.
-Navigate to Administrator settings and left pane scroll down to SSO APP.
-Following setting need to be configured
-Allow the use of multiple user back-ends (e.g. LDAP) = Enable
-Attribute to map the UID = UserName
+
+Prepare your Nextcloud instance for SSO & SAML Authentication. Enable APP called **SSO & SAML Authentication**.
+
+Navigate to Administrator settings and left pane scroll down to **SSO & SAML Authentication**.
+
+Following setting need to be configured.
+
+  * Allow the use of multiple user back-ends (e.g. LDAP) = Enable
+  * Attribute to map the UID = UserName
 ---Identity Provider Data---
-https://zabbix-4rkfxx.zitadel.cloud/saml/v2/metadata
-https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SSO
-https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SLO
+  * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/metadata
+  * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SSO
+  * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SLO
+
+Insert Zitadel Key.
+!!!!  Discrobe how-to get from zitadel 
+```
 -- Public X.509 certificate of the idp ---
 MIIFIjCCAwqgAwIBAgICAxwwDQYJKoZIhvcNAQELBQAwLDEQMA4GA1UEChMHWklUQURFTDEYMBYGA1UEAxMPWklUQURFTC
 BTQU1MIENBMB4XDTIzMTAxMzAxMTYyMloXDTI0MTAxMjA3MTYyMlowMjEQMA4GA1UEChMHWklUQURFTDEeMBwGA1UEAxMV
@@ -119,34 +147,34 @@ ewvz1Sj1Ig7Td8Nq313MYMTwimzrm8e8gxLRrosWAKcuIrz+NaabWLrbePrll2GvPUDYI4+Iwkf6YCye
 EaWuudlsip+55qJ6J0IIaOMagTu04UK6UTOpan9NKSvQSEFyooyGL+dSv8/WkOexEgy/62k41KlcjNMGc96MGOHleYtdWD
 6HSF1B3WB+6MmNck7LSmSCm46v2wbNoQrSTBaiCHIEx0NFzTALG0ELdDAzivFKS9pBEPyK3McMWXCKYJjReTr5TRFE2FxT
 aWnxeKtMn/UvE1I7PsgDcvm/a+TR48YW0k+yYegXktGeQxurA/aZqSjSBc55kfDR8A==
-Bottom is a Download metadata XML, this will be uploaded to Zitadel Project called Nextcloud.
+```
+
+Bottom of the page click the **Download metadata XML** button, this will be uploaded to Zitadel Project called Nextcloud.
 You should also see a Green metadata valid next to download.
 
 
 ## Zitadel
+
 Create a project called nextcloud, create an application called nextcloud using SAML.
 Click the button called Upload Metadata XML and upload the XML file from nextcloud.
 Example:
+```
 <?xml version="1.0"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
-validUntil="2023-10-26T03:08:08Z"
-cacheDuration="PT604800S"
-entityID="https://nextcloud.hungryhoward.
-com/index.php/apps/user_saml/saml/metadata">
+      <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+          validUntil="2023-10-26T03:08:08Z"
+          cacheDuration="PT604800S"
+          entityID="https://nextcloud.domain.com/index.php/apps/user_saml/saml/metadata">
 <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false"
-protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
 <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-Location="https://nextcloud.hungryhoward.
-com/index.php/apps/user_saml/saml/sls" />
-<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameidformat:
-unspecified</md:NameIDFormat>
+          Location="https://nextcloud.domain.com/index.php/apps/user_saml/saml/sls" />
+<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameidformat:unspecified</md:NameIDFormat>
 <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-Location="https://nextcloud.hungryhoward.
-com/index.php/apps/user_saml/saml/acs"
+      Location="https://nextcloud.domain.com/index.php/apps/user_saml/saml/acs"
 index="1" />
-
-</md:SPSSODescriptor>
+  </md:SPSSODescriptor>
 </md:EntityDescriptor>
+```
 
 
 
