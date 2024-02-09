@@ -152,7 +152,9 @@ sudo chown -R www-data:www-data /var/www/nextcloud
 ```
 ## Extra's
 sudo phpenmod bcmath gmp imagick intl
+
 sudo apt install unzip
+
 sudo a2enmod dir env headers mime rewrite ssl
 
 
