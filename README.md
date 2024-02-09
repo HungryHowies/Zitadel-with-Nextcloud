@@ -20,7 +20,7 @@ The following documentation discribes the How-to for installing nextcloud (Laste
 ## PHP
 
 Install PHP 8.2 on Ubuntu 22.04. By defualt Ubuntu does not install the correct verion of PHP needed so this section is a How-To.
-need to redo  proceedure --> https://docs.nextcloud.com/server/latest/admin_manual/installation/command_line_installation.html
+
 Adding the official PHP repository on Ubuntu.
 
 ```
