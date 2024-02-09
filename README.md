@@ -45,6 +45,7 @@ PHP install
 sudo apt-get install php8.2
 ```
 
+
 If there are multiple PHP version installed this command will let you  set the correct PHP version. 
 
 ```
@@ -87,7 +88,7 @@ sudo a2enmod php8.2
 Install the required dependencies. This may take  few minutes because it shoudl show it will upgrade to PHP-8.3.
 
 ```
-sudo apt-get install php-xml
+apt install libapache2-mod-php php8.2-bz2 php8.2-gd php8.2-mysql php8.2-curl php8.2-mbstring php8.2-imagick php8.2-zip php8.2-ctype php8.2-curl php8.2-dom php8.2-json php8.2-posix php8.2-bcmath php8.2-xml php8.2-intl php8.2-gmp zip unzip wget
 ```
 
 ## Create Nextloud Database/User
