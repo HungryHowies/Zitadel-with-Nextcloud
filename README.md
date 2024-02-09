@@ -10,7 +10,7 @@ The following documentation discribes the How-to for installing nextcloud (Laste
 
 * Ubuntu 22.04 LTS (recommended)
 * MySQL 8.0+ or MariaDB 10.3/10.4/10.5/10.6 (recommended)
-* PHP Runtime 8.2 (recommended) 8.3
+* PHP Runtime 8.2 (recommended) 
 * Completed all updates & upgrades.
 * Static IP Address/DNS
 * Fully qualified Domain name
