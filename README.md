@@ -91,7 +91,10 @@ Install the required dependencies. This may take  few minutes because it shoudl 
 ```
 apt install  php8.2-bz2 php8.2-gd php8.2-mysql php8.2-curl php8.2-mbstring php8.2-imagick php8.2-zip php8.2-common php8.2-curl php8.2-xml  php8.2-posix php8.2-bcmath php8.2-xml php8.2-intl php8.2-gmp zip unzip wget
 ```
-
+Apache2 and MariaDb
+```
+apt install apache2 mariadb-server
+```
 ## Create Nextloud Database/User
 
 Login
