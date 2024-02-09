@@ -151,11 +151,19 @@ Set Permissions.
 sudo chown -R www-data:www-data /var/www/nextcloud
 ```
 ## Extra's
+Use phpenmod command followed by module name to enable specific PHP module on your system.
+```
 sudo phpenmod bcmath gmp imagick intl
-
+```
+Install Unzip
+```
 sudo apt install unzip
+```
+Enable Apache Mod's
+```
 
 sudo a2enmod dir env headers mime rewrite ssl
+```
 
 
 
