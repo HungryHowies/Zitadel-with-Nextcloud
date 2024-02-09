@@ -150,7 +150,8 @@ Set Permissions.
 ```
 sudo chown -R www-data:www-data /var/www/nextcloud
 ```
-## Extra's
+## PHP and Apache Mod's
+
 Use phpenmod command followed by module name to enable specific PHP module on your system.
 ```
 sudo phpenmod bcmath gmp imagick intl
@@ -167,7 +168,7 @@ sudo a2enmod dir env headers mime rewrite ssl
 
 
 
-Install Let's encrypt.
+## Install Let's encrypt.
 
 ```
 sudo apt install certbot python3-certbot-apache
