@@ -5,11 +5,17 @@ Installing and configuring Nextcloud  to authenacate with SAML against Zitadel
 using Apache and MariaDB
 
 ## Prerequisite
+
 Ubuntu 22.04 
+
 Completed all updates & upgrades.
+
 Static IP Address
+
 Fully qualified Domain name
+
 Set time zone.
+
 Set Hosts/Hostname
 
 ## Nextcloud installation, 
