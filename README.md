@@ -59,20 +59,21 @@ php -v
 ```
 
 Ubuntu 22.04 uses a few different commands to help manage Apache modules, so it utilizes a specific PHP version depending on which module is loaded.
-This can be viewed  by running the following command.
+This can be viewed by running the following command.
 
 ```
 ls /etc/apache2/mods-available/php*
 ```
 
-The default LAMP stack install would have PHP 7.0 and the new PHP 8.2 install we just made, but running the next command shows that PHP 7.0 is still active.
+The default LAMP stack install might have PHP 7.0 and the new version PHP 8.2 install. 
+Check all PHP versions installed on ubuntu by running the below commands.
 
 ```
- ls /etc/apache2/mods-available/php*
+pkg-query -l | grep -i php
 ```
 
 If there are older PHP 7.0 version using the following command.
-
+Example:
 ```
 sudo a2dismod php7.0
 ```
