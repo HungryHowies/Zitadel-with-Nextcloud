@@ -1,86 +1,192 @@
 # Zitadel-with-Nextcloud
+
 Installing and configuring Nextcloud  to authenacate with SAML against Zitadel
 
 ## Overview
-using Apache and MariaDB
+
+The following documentation discribes the How-to for installing nextcloud (Lastest version) and configurations needed for HTTPS and the connection to authenicate against Zitadel. This setup is a Ubuntu-Server core installation, this means it has the minimum amount packages and/or depenedncies (i.e., install as you go). Its easier to install the correct packages first, then to  disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2.
 
 ## Prerequisite
 
-Ubuntu 22.04 
+* Ubuntu 22.04 LTS (recommended)
+* MySQL 8.0+ or MariaDB 10.3/10.4/10.5/10.6 (recommended)
+* PHP Runtime 8.2 (recommended) 8.3
+* Completed all updates & upgrades.
+* Static IP Address/DNS
+* Fully qualified Domain name
+* Set Date/Time.
+* Set Hosts/Hostname
 
-Completed all updates & upgrades.
+## PHP
 
-Static IP Address
+Install PHP 8.2 on Ubuntu 22.04. By defualt Ubuntu does not install the correct verion of PHP needed so this section is a How-To.
+need to redo  proceedure --> https://docs.nextcloud.com/server/latest/admin_manual/installation/command_line_installation.html
+Adding the official PHP repository on Ubuntu.
 
-Fully qualified Domain name
-
-Set time zone.
-
-Set Hosts/Hostname
-
-## Nextcloud installation, 
-Install the required packages.
 ```
-sudo apt install apache2 mariadb-server libapache2-mod-php php-gd php-mysql php-curl phpmbstring php-intl php-gmp php-bcmath php-xml php-imagick php-zip
+apt-get install software-properties-common
 ```
-To start the MySQL command line mode, use the following command:
+```
+sudo add-apt-repository ppa:ondrej/php
+```
+Press the **Enter** key when the system prompts you to. This will allow the system to use the repository as a source for new software.
+
+installation of PHP 8.2 on Ubuntu 22.04 using this command.
+
+Update Repository
+
+```
+apt-get update
+```
+
+PHP install
+
+```
+sudo apt-get install php8.2
+```
+
+If there are multiple PHP version installed this command will let you  set the correct PHP version. 
+
+```
+Configuring the operating system (OS) to use the new PHP version
+```
+
+Verifying the PHP version
+
+```
+php -v
+```
+
+Ubuntu 22.04 uses a few different commands to help manage Apache modules, so it utilizes a specific PHP version depending on which module is loaded.
+This can be viewed  by running the following command.
+
+```
+ls /etc/apache2/mods-available/php*
+```
+
+The default LAMP stack install would have PHP 7.0 and the new PHP 8.2 install we just made, but running the next command shows that PHP 7.0 is still active.
+
+```
+ ls /etc/apache2/mods-available/php*
+```
+
+If there are older PHP 7.0 version using the following command.
+
+```
+sudo a2dismod php7.0
+```
+
+Then enable PHP 8.2 using this command.
+
+```
+sudo a2enmod php8.2
+```
+
+## Install Dependencies
+
+Install the required dependencies. This may take  few minutes because it shoudl show it will upgrade to PHP-8.3.
+
+```
+sudo apt-get install php-xml
+```
+
+## Create Nextloud Database/User
+
+Login
+
 ```
 sudo mysql
 ```
-Create Database
+
+Create User.
+
 ```
 CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
 ```
+
+Create database and settings.
+
 ```
 CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ```
+
+Grant Privileges.
+
 ```
 GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
 ```
+
+Reload the in-memory copy of privileges from the privilege tables.
+
 ```
 FLUSH PRIVILEGES;
 ```
-Download Nextcloud package.
+
+Exit.
+
+```
+exit
+```
+
+## Install Nextcloud 
+
 ```
 wget https://download.nextcloud.com/server/releases/latest.tar.bz2
 ```
-Extract
+
+Extract Nextcloud package
+
 ```
-tar -jxpvf latest.tar.bz2 -C /var/www/html/
+tar -jxpvf latest.tar.bz2 -C /var/www/
 ```
-Copy & move ### NOT SURE
-```
-sudo cp -r nextcloud /var/www
-```
-Permissions
+
+Set Permissions.
+
 ```
 sudo chown -R www-data:www-data /var/www/nextcloud
 ```
+## Extra's
+sudo phpenmod bcmath gmp imagick intl
+sudo apt install unzip
+sudo a2enmod dir env headers mime rewrite ssl
+
+
 
 Install Let's encrypt.
+
 ```
 sudo apt install certbot python3-certbot-apache
 ```
+
 Create Certificates.
+
 ```
 sudo certbot --apache
 ```
+
 Restart Apache2
+
 ```
 systemctl restart apache2
 ```
+
 Disable site
+
 ```
 sudo a2dissite 000-default.conf
 ```
+
 Create NextCloud site and enable it.
+
 ```
 vi /etc/apache2/sites-available/nextcloud.conf
 ```
-configure Nextcloud Site
+
+configure Nextcloud Site.
+
 ```
 <VirtualHost *:80>
-      ServerName nextcloud.hungry-howard.com
+      ServerName nextcloud.domain.com
       Redirect / https://nextcloud.domain.com/
 </VirtualHost>
 <IfModule mod_ssl.c>
@@ -95,7 +201,7 @@ configure Nextcloud Site
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
         SSLEngine on
-        ServerName nextcloud.hungry-howard.com
+        ServerName nextcloud.domain.com
         SSLCertificateFile /etc/letsencrypt/live/nextcloud.domain.com/fullchain.pem
         SSLCertificateKeyFile /etc/letsencrypt/live/nextcloud.domain.com/privkey.pem
         Include /etc/letsencrypt/options-ssl-apache.conf
@@ -103,15 +209,17 @@ configure Nextcloud Site
 ```
 
 Set permisions.
+
 ```
-sudo chown -R www-data:www-data /var/www/html
+sudo chown -R www-data:www-data /etc/apache2/sites-available/nextcloud.conf
 ```
+
 Enable Nextlcoud site
+
 ```
 sudo a2ensite nextcloud
 ```
-Result should look like this.
-root@nextcloud:/etc/apache2/sites-available# cat nextcloud.conf
+
 
 ## Nextcloud SSO Web UI configuration
 
@@ -125,7 +233,8 @@ Following setting need to be configured.
 
   * Allow the use of multiple user back-ends (e.g. LDAP) = Enable
   * Attribute to map the UID = UserName
----Identity Provider Data---
+    
+-------------Identity Provider Data---------------
   * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/metadata
   * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SSO
   * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SLO
@@ -181,6 +290,14 @@ index="1" />
   </md:SPSSODescriptor>
 </md:EntityDescriptor>
 ```
+## Additional Notes:
+
+Nextcloud Admin Manual.
+
+https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html
+https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html#server
+https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html
+https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/index.html
 
 
 
