@@ -235,8 +235,6 @@ Add Directory section.
 
 Nextcloud Site example.
 
-Adding a redirect for port 80.
-
 ```
 <VirtualHost *:80>
       ServerName nextcloud.domain.com
