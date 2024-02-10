@@ -431,7 +431,7 @@ Example:
 ```
 https://zitadel.com/saml/v2/metadata.
 ```
-Copy the third certificate from the top. Navigate to Nextcloud SAMl section called "Identity Provider Data" and place that certificate in the section called **Public X.509 certificate of the idp**. As shown below (HERE).
+Copy the third certificate from the top. Navigate to Nextcloud SAML section called "Identity Provider Data" and place that certificate in the section called **Public X.509 certificate of the idp**. As shown below (HERE).
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/cc39b706-5537-4595-90d4-5748ba41ab88)
 
