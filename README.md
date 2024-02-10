@@ -22,7 +22,7 @@ Install PHP 8.2 on Ubuntu 22.04. By default, Ubuntu does not install the correct
 Adding the official PHP repository on Ubuntu.
 
 ```
-apt-get install software-properties-common.
+apt-get update && apt-get clean && apt-get install -y build-essential
 ```
 ```
 sudo add-apt-repository ppa:ondrej/php
