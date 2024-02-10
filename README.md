@@ -4,20 +4,18 @@ Installing and configuring Nextcloud  to authenticate with SAML against Zitadel
 
 ## Overview
 
-The following documentation describes the How-to for installing NextCloud (Latest version) and configurations needed for HTTPS and the connection to authenticate against Zitadel. This setup is an Ubuntu-Server core installation, this means it has the minimum amount packages and/or dependencies (i.e., install as you go). It’s easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2.
+The following documentation describes the How-to for installing NextCloud (Latest version) and configurations needed for HTTPS and the connection to authenticate against Zitadel. This setup is an Ubuntu-Server core installation, this means it has the minimum amount packages and/or dependencies (i.e., install as you go). It’s easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2. MySQL 8.0+ or MariaDB 10.3/10.4/10.5/10.6 (recommended)
 
 ## Prerequisite
 
 * Ubuntu 22.04 LTS (recommended)
-* MySQL 8.0+ or MariaDB 10.3/10.4/10.5/10.6 (recommended)
-* PHP Runtime 8.2 (recommended) 
 * Completed all updates & upgrades.
 * Static IP Address/DNS
 * Fully qualified Domain name
 * Set Date/Time.
 * Set Hosts/Hostname
 
-## PHP
+## PHP 
 
 Install PHP 8.2 on Ubuntu 22.04. By default, Ubuntu does not install the correct version of PHP needed so this section is a How-To.
 
@@ -31,7 +29,7 @@ sudo add-apt-repository ppa:ondrej/php
 ```
 Press the **Enter** key when the system prompts you to. This will allow the system to use the repository as a source for new software.
 
-installation of PHP 8.2 on Ubuntu 22.04 using this command.
+Install PHP 8.2 on Ubuntu 22.04.
 
 Update Repository
 
@@ -45,11 +43,10 @@ PHP install.
 sudo apt-get install php8.2
 ```
 
-
-If there are multiple PHP versions installed this command will let you  set the correct PHP version. 
+Then enable PHP 8.2 using this command.
 
 ```
-Configuring the operating system (OS) to use the new PHP version.
+sudo a2enmod php8.2
 ```
 
 Verifying the PHP version
@@ -69,32 +66,31 @@ The default LAMP stack install might have PHP 7.0 and the new version PHP 8.2 in
 Check all PHP versions installed on ubuntu by running the below commands.
 
 ```
-pkg-query -l | grep -i php
+dpkg-query -l | grep -i php
 ```
 
-If there are older PHP 7.0 version using the following command.
+NOTE: If there are older verions of PHP installed, might want to disable then by following command. 
+
 Example:
+
 ```
 sudo a2dismod php7.0
 ```
 
-Then enable PHP 8.2 using this command.
-
-```
-sudo a2enmod php8.2
-```
-
 ## Install Dependencies
 
-Install the required dependencies.
+Install the required dependencies for Nextcloud.
 
 ```
 apt install  php8.2-bz2 php8.2-gd php8.2-mysql php8.2-curl php8.2-mbstring php8.2-imagick php8.2-zip php8.2-common php8.2-curl php8.2-xml  php8.2-posix php8.2-bcmath php8.2-xml php8.2-intl php8.2-gmp zip unzip wget
 ```
-Apache2 and MariaDb
+
+Install Apache2 and MariaDb. 
+
 ```
 apt install apache2 mariadb-server
 ```
+
 ## Create Nextcloud Database/User
 
 Login
@@ -103,7 +99,7 @@ Login
 sudo mysql
 ```
 
-Create User.
+Create Nextcloud database User.
 
 ```
 CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
@@ -139,7 +135,7 @@ exit
 wget https://download.nextcloud.com/server/releases/latest.tar.bz2
 ```
 
-Extract Nextcloud package.
+Extract Nextcloud package and move it to WWW directory. 
 
 ```
 tar -jxpvf latest.tar.bz2 -C /var/www/
@@ -150,18 +146,20 @@ Set Permissions.
 ```
 sudo chown -R www-data:www-data /var/www/nextcloud
 ```
+
 ## PHP and Apache Mod's
 
 Use phpenmod command followed by module name to enable specific PHP module on your system.
+
 ```
 sudo phpenmod bcmath gmp imagick intl
 ```
+
 Enable Apache Mod's
 
 ```
 sudo a2enmod dir env headers mime rewrite ssl
 ```
-
 
 
 ## Install Let's encrypt.
@@ -187,7 +185,9 @@ Disable 000-default.conf  site.
 ```
 sudo a2dissite 000-default.conf
 ```
+
 Change directory.
+
 ```
 cd /etc/apache2/sites-available
 ```
@@ -204,15 +204,16 @@ Disable site 000-default-le-ssl.conf.
 sudo a2dissite 000-default-le-ssl.conf
 ```
 
-Adjust configuration needed.
-Login NextCloud site file.
+Login to the NextCloud site file. Adjust configuration as needed.
 
 ```
 vi /etc/apache2/sites-available/nextcloud.conf
 ```
 
-Nextcloud Site example. 
-Adding  a redirect  for port 80.
+Nextcloud Site example.
+
+Adding a redirect for port 80.
+
 ```
 <VirtualHost *:80>
       ServerName nextcloud.domain.com
@@ -256,19 +257,21 @@ Change Directory.
 cd /var/www/nextcloud/
 ```
 
-Execute OCC command. 
-Ensure  the database and database user are correct. Before executing the following command
+Execute OCC command and ensure the database and database user are correct. Before executing the following command.
+
 ```
 sudo -u www-data php occ  maintenance:install \
 --database='mysql' --database-name='nextcloud' \
 --database-user=someuser --database-pass='password' \
 --admin-user='admin' --admin-pass='password'
 ```
+
 ##  Nextcloud Config.php
 
-This example "Localhost”  is not in use.  Adjusting config.php  file two lines is needed.
+This example "Localhost”  is not in use. Adjusting the config.php file from these two lines as needed.
 
 **Before** adjusting the config.php file.
+
 ```
 'trusted_domains' =>
   array (
@@ -279,6 +282,7 @@ This example "Localhost”  is not in use.  Adjusting config.php  file two lines
 ```
 
 **After** adjusting the config.php file.
+
 ```
 'trusted_domains' =>
   array (
@@ -288,12 +292,16 @@ This example "Localhost”  is not in use.  Adjusting config.php  file two lines
 ```
 'overwrite.cli.url' => 'https://nextcloud.domain.com',
 ```
+
 Restart Apache2 service.
+
 
 ```
 systemctl restart apache2
 ```
+
 Login 
+
 ```
 https://nextcloud.domain.com
 ```
