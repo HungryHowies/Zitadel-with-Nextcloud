@@ -291,6 +291,11 @@ sudo -u www-data php occ  maintenance:install \
 
 This example "Localhost”  is not in use. Adjusting the config.php file from these two lines as needed.
 
+Edit config.php file
+```
+vi /var/www/nextcloud/config/config.php
+```
+
 **Before** adjusting the config.php file.
 
 ```
