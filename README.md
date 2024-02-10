@@ -391,23 +391,38 @@ Choose the Use built-in SAML authentication button.
 
 ## Prepare your Nextcloud instance for SSO & SAML Authentication.
 
-The following setting need to be configured. Enable the following.
+The following settings need to be configured. 
+
+Enable the following.
 
   * Allow the use of multiple user back-ends (testing)
+
+Configure UID.
+
   * Attribute to map the UID = UserName
     
-The following the endpoints are added to Zitadel server FQDN and/or IP Address.
+In the section called **Identity Provider Data**.
 
- ```/saml/v2/metadata```
- ``` /saml/v2/SSO```
- ``` /saml/v2/SLO```
+Identifier of the idp entity URL. 
+ 
+ ```
+https://nextcloud.domain.com/index.php/apps/user_saml/saml/metadata
+ ```
+
+Add Zitadel SSO URL in section called "URL Target of the idp when the SP will sen the authentication Request Message".
+
+```
+ https://zitadel.domain.com/saml/v2/SSO
+```
+ 
+ Add Zitadel SLO URL in this section called "URL Location of the idp where the SP will send the SLO Reuqest".
+ 
+ ```
+ https://zitadel.domain.com/saml/v2/SLO
+```
  
 These are also found after creating a new Project in Zitadel.
-
--------------Identity Provider Data---------------
-  * https://zitadel.domain.com/saml/v2/metadata
-  * https://zitadel.domain.com/saml/v2/SSO
-  * https://zitadel.domain.com/saml/v2/SLO
+  
 
 Using the end point **/saml/v2/metadata/** and place it on the end of Zitadel server name. This will show the certificate/s needed.
 
@@ -418,9 +433,10 @@ https://zitadel.com/saml/v2/metadata.
 ```
 Copy the third certificate from the top. Navigate to Nextcloud SAMl section called "Identity Provider Data" and place that certificate in the section called **Public X.509 certificate of the idp**. As shown below (HERE).
 
-![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/badd6b50-de2a-4a29-9e37-4807a905716f)
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/918117b8-ef08-43b7-a320-afd623969d6f)
 
-Public X.509 certificate of the IdP: Copy the certificate from the texteditor. You will need to add -----BEGIN CERTIFICATE----- in front of the key and -----END CERTIFICATE----- to the end of it.
+
+Public X.509 certificate of the IdP: Copy the certificate then you will need to add -----BEGIN CERTIFICATE----- in front of the key and -----END CERTIFICATE----- to the end of it.
 Example:
 
 ```
@@ -445,7 +461,7 @@ EaWuudlsip+55qJ6J0IIaOMagTu04UK6UTOpan9NKSvQSEFyooyGL+dSv8/WkOexEgy/62k41KlcjNMG
 6HSF1B3WB+6MmNck7LSmSCm46v2wbNoQrSTBaiCHIEx0NFzTALG0ELdDAzivFKS9pBEPyK3McMWXCKYJjReTr5TRFE2FxT
 aWnxeKtMn/UvE1I7PsgDcvm/a+TR48YW0k+yYegXktGeQxurA/aZqSjSBc55kfDR8A==
 ```
-A Green metadata valid next to download.
+Ensure the  **Metadata valid** is in green.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/d717dc3e-b092-468b-b95b-a767b6015046)
 
@@ -467,11 +483,18 @@ Click "Create New Project" and set the project name, Click continue.
 
 Under Application click "New".
 
-
 Click the button called **Upload Metadata XML**  and upload the XML file from Nextcloud.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/cdf31bd3-ddc4-47c5-9481-217dd3f60d03)
 
 Click the Continue button, then click Create.
+
+Results:
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/5716dcd3-4f6c-4a87-b076-0e35ca0c713c)
+
+
+
+
 
 
