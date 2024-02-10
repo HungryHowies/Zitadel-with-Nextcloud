@@ -4,7 +4,7 @@ Installing and configuring Nextcloud  to authenticate using SAML with Zitadel.
 
 ## Overview
 
-The following documentation describes the How-to for installing NextCloud (Latest version) and configurations needed for HTTPS and the connection to authenticate against Zitadel. This setup is an Ubuntu-Server core installation, this means it has the minimum amount packages and/or dependencies (i.e., install as you go). It’s easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2. MySQL 8.0+ or MariaDB 10.3/10.4/10.5/10.6 (recommended)
+The following documentation describes the How-to for installing NextCloud (Latest version) and configurations needed for HTTPS and the connection to authenticate against Zitadel. This setup is an Ubuntu-Server core installation, this means it has the minimum amount packages and/or dependencies (i.e., install as you go). It’s easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2 & MariaDB-Server. This documentation is a basic setup to configure SSO/SAML on Nextcloud/Zitadel.
 
 ## Prerequisite
 
