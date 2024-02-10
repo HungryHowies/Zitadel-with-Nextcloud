@@ -433,7 +433,8 @@ https://zitadel.com/saml/v2/metadata.
 ```
 Copy the third certificate from the top. Navigate to Nextcloud SAMl section called "Identity Provider Data" and place that certificate in the section called **Public X.509 certificate of the idp**. As shown below (HERE).
 
-![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/918117b8-ef08-43b7-a320-afd623969d6f)
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/cc39b706-5537-4595-90d4-5748ba41ab88)
+
 
 
 Public X.509 certificate of the IdP: Copy the certificate then you will need to add -----BEGIN CERTIFICATE----- in front of the key and -----END CERTIFICATE----- to the end of it.
