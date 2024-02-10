@@ -490,9 +490,17 @@ Click the button called **Upload Metadata XML**  and upload the XML file from Ne
 
 Click the Continue button, then click Create.
 
+Create a user in Zitadel and add that user under the Porject "Nextcloud".
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/d15f388d-2376-4c9a-b79a-ffb87db00d6f)
+
+
+
 Results:
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/5716dcd3-4f6c-4a87-b076-0e35ca0c713c)
+
+Login with user created in Zitadel "some.user".
 
 
 
