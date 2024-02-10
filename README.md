@@ -34,7 +34,7 @@ Install PHP 8.2 on Ubuntu 22.04.
 Update Repository
 
 ```
-apt-get update.
+apt-get update
 ```
 
 PHP install.
