@@ -318,6 +318,37 @@ vi /var/www/nextcloud/config/config.php
 ```
 'overwrite.cli.url' => 'https://nextcloud.domain.com',
 ```
+## Configuring PHP
+
+The next step is configuring some changes in PHP options. First, edit the following file.
+
+```
+vi /etc/php/8.2/apache2/php.ini
+```
+Adjust the following parameters within that file:
+```
+memory_limit = 512M
+
+upload_max_filesize = 200M
+
+max_execution_time = 360
+
+post_max_size = 200M
+
+date.timezone = America/Detroit
+
+opcache.enable=1
+
+opcache.interned_strings_buffer=8
+
+opcache.max_accelerated_files=10000
+
+opcache.memory_consumption=128
+
+opcache.save_comments=1
+
+opcache.revalidate_freq=1
+```
 
 Restart Apache2 service.
 
@@ -364,26 +395,27 @@ The following setting need to be configured. Enable the following.
 
   * Allow the use of multiple user back-ends (testing)
   * Attribute to map the UID = UserName
-The following the endpoints are added to Zitadel server FQDN and/or IP Address
+    
+The following the endpoints are added to Zitadel server FQDN and/or IP Address.
 
  ```/saml/v2/metadata```
  ``` /saml/v2/SSO```
- ``` /saml/v2/SLO```.
+ ``` /saml/v2/SLO```
  
-These are alos found after create a new Project for Nextcloud.
+These are also found after creating a new Project in Zitadel.
+
 -------------Identity Provider Data---------------
   * https://zitadel.domain.com/saml/v2/metadata
   * https://zitadel.domain.com/saml/v2/SSO
   * https://zitadel.domain.com/saml/v2/SLO
 
-Using the end point **/saml/v2/metadata/** and place it on the end of Zitadel server name. 
+Using the end point **/saml/v2/metadata/** and place it on the end of Zitadel server name. This will show the certificate/s needed.
 
 Example:
 ```
 https://zitadel.com/saml/v2/metadata.
 ```
-The certificate from Zitadel. Copy the third certificate from the top.
-Navigate to Nextcloud SAMl section called "Identity Provider Data" in the section called  Public X.509 certificate of the idp. Then paste it in the box as shown below (HERE).
+Copy the third certificate from the top. Navigate to Nextcloud SAMl section called "Identity Provider Data" and place that certificate in the section called **Public X.509 certificate of the idp**. As shown below (HERE).
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/badd6b50-de2a-4a29-9e37-4807a905716f)
 
