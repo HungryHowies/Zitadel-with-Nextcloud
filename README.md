@@ -463,11 +463,11 @@ EaWuudlsip+55qJ6J0IIaOMagTu04UK6UTOpan9NKSvQSEFyooyGL+dSv8/WkOexEgy/62k41KlcjNMG
 aWnxeKtMn/UvE1I7PsgDcvm/a+TR48YW0k+yYegXktGeQxurA/aZqSjSBc55kfDR8A==
 ```
 
-Attribute mapping section  the following 
+Attribute mapping section  configure the following. 
 
 * UserName
 * Email
-* 
+  
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/705dce88-89d1-44cc-899b-9dcd3c138616)
 
 Ensure the  **Metadata valid** is in green.
@@ -476,7 +476,7 @@ Ensure the  **Metadata valid** is in green.
 
 Bottom of the page click the **Download metadata XML** button, this will be uploaded to Zitadel Project called Nextcloud.
 
-If an error occures check Nextcloud by runn the OCC command in Nextcloud Directory (/var/www/nextcloud).
+If an error occurs check Nextcloud by executing the OCC command in Nextcloud Directory (/var/www/nextcloud).
 
 ```
 sudo -u www-data php occ saml:config:get
