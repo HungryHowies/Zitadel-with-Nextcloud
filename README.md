@@ -1,10 +1,10 @@
 # Zitadel-with-Nextcloud
 
-Installing and configuring Nextcloud  to authenacate with SAML against Zitadel
+Installing and configuring Nextcloud  to authenticate with SAML against Zitadel
 
 ## Overview
 
-The following documentation discribes the How-to for installing nextcloud (Lastest version) and configurations needed for HTTPS and the connection to authenicate against Zitadel. This setup is a Ubuntu-Server core installation, this means it has the minimum amount packages and/or depenedncies (i.e., install as you go). Its easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2.
+The following documentation describes the How-to for installing NextCloud (Latest version) and configurations needed for HTTPS and the connection to authenticate against Zitadel. This setup is an Ubuntu-Server core installation, this means it has the minimum amount packages and/or dependencies (i.e., install as you go). It’s easier to install the correct packages first, then to disable/remove old packages. Apache2 and MariaDB-Server will be installed along with setting up PHP-8.2.
 
 ## Prerequisite
 
@@ -19,12 +19,12 @@ The following documentation discribes the How-to for installing nextcloud (Laste
 
 ## PHP
 
-Install PHP 8.2 on Ubuntu 22.04. By defualt Ubuntu does not install the correct verion of PHP needed so this section is a How-To.
+Install PHP 8.2 on Ubuntu 22.04. By default, Ubuntu does not install the correct version of PHP needed so this section is a How-To.
 
 Adding the official PHP repository on Ubuntu.
 
 ```
-apt-get install software-properties-common
+apt-get install software-properties-common.
 ```
 ```
 sudo add-apt-repository ppa:ondrej/php
@@ -36,20 +36,20 @@ installation of PHP 8.2 on Ubuntu 22.04 using this command.
 Update Repository
 
 ```
-apt-get update
+apt-get update.
 ```
 
-PHP install
+PHP install.
 
 ```
 sudo apt-get install php8.2
 ```
 
 
-If there are multiple PHP version installed this command will let you  set the correct PHP version. 
+If there are multiple PHP versions installed this command will let you  set the correct PHP version. 
 
 ```
-Configuring the operating system (OS) to use the new PHP version
+Configuring the operating system (OS) to use the new PHP version.
 ```
 
 Verifying the PHP version
@@ -86,7 +86,7 @@ sudo a2enmod php8.2
 
 ## Install Dependencies
 
-Install the required dependencies. This may take  few minutes because it shoudl show it will upgrade to PHP-8.3.
+Install the required dependencies.
 
 ```
 apt install  php8.2-bz2 php8.2-gd php8.2-mysql php8.2-curl php8.2-mbstring php8.2-imagick php8.2-zip php8.2-common php8.2-curl php8.2-xml  php8.2-posix php8.2-bcmath php8.2-xml php8.2-intl php8.2-gmp zip unzip wget
@@ -95,7 +95,7 @@ Apache2 and MariaDb
 ```
 apt install apache2 mariadb-server
 ```
-## Create Nextloud Database/User
+## Create Nextcloud Database/User
 
 Login
 
@@ -139,7 +139,7 @@ exit
 wget https://download.nextcloud.com/server/releases/latest.tar.bz2
 ```
 
-Extract Nextcloud package
+Extract Nextcloud package.
 
 ```
 tar -jxpvf latest.tar.bz2 -C /var/www/
@@ -156,13 +156,9 @@ Use phpenmod command followed by module name to enable specific PHP module on yo
 ```
 sudo phpenmod bcmath gmp imagick intl
 ```
-Install Unzip
-```
-sudo apt install unzip
-```
 Enable Apache Mod's
-```
 
+```
 sudo a2enmod dir env headers mime rewrite ssl
 ```
 
@@ -186,17 +182,17 @@ Restart Apache2
 systemctl restart apache2
 ```
 
-Disable site's
+Disable 000-default.conf  site.
 
 ```
 sudo a2dissite 000-default.conf
 ```
-Change directory
+Change directory.
 ```
-/etc/apache2/sites-available
+cd /etc/apache2/sites-available
 ```
 
-Copy 000-default-le-ssl.conf to nextcloud.conf. This will perserve the configurationtion from Let's encrypt.
+Copy 000-default-le-ssl.conf to nextcloud.conf. This will preserve the configuration from Let's encrypt.
 
 ```
 cp 000-default-le-ssl.conf nextcloud.conf
@@ -209,13 +205,14 @@ sudo a2dissite 000-default-le-ssl.conf
 ```
 
 Adjust configuration needed.
+Login NextCloud site file.
 
 ```
 vi /etc/apache2/sites-available/nextcloud.conf
 ```
 
 Nextcloud Site example. 
-
+Adding  a redirect  for port 80.
 ```
 <VirtualHost *:80>
       ServerName nextcloud.domain.com
@@ -239,13 +236,13 @@ Nextcloud Site example.
 </VirtualHost>
 ```
 
-Set permisions.
+Set permissions on Nextcloud site file.
 
 ```
 sudo chown -R www-data:www-data /etc/apache2/sites-available/nextcloud.conf
 ```
 
-Enable Nextlcoud site
+Enable Nextcloud site.
 
 ```
 sudo a2ensite nextcloud
@@ -259,29 +256,29 @@ Change Directory.
 cd /var/www/nextcloud/
 ```
 
-Execute OCC command.
-
+Execute OCC command. 
+Ensure  the database and database user are correct. Before executing the following command
 ```
 sudo -u www-data php occ  maintenance:install \
 --database='mysql' --database-name='nextcloud' \
---database-user='root' --database-pass='password' \
+--database-user=someuser --database-pass='password' \
 --admin-user='admin' --admin-pass='password'
 ```
-## Nextcloud Config.php
+##  Nextcloud Config.php
 
-If "Localhost is not being used  may need to adjust these lines the config.php.
+This example "Localhost”  is not in use.  Adjusting config.php  file two lines is needed.
 
-Before:
+**Before** adjusting the config.php file.
 ```
 'trusted_domains' =>
   array (
-    0 => 'localhost',
+  		  0 => 'localhost',
 ```
 ```
 'overwrite.cli.url' => 'http://localhost',
 ```
 
-After:
+**After** adjusting the config.php file.
 ```
 'trusted_domains' =>
   array (
@@ -309,7 +306,7 @@ Prepare your Nextcloud instance for SSO & SAML Authentication. Enable APP called
 
 Navigate to Administrator settings and left pane scroll down to **SSO & SAML Authentication**.
 
-Following setting need to be configured.
+The following setting need to be configured.
 
   * Allow the use of multiple user back-ends (e.g. LDAP) = Enable
   * Attribute to map the UID = UserName
@@ -378,26 +375,3 @@ https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubunt
 https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html#server
 https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html
 https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/index.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
