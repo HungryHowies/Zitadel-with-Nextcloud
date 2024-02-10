@@ -334,15 +334,34 @@ https://nextcloud.domain.com
 
 ## Nextcloud SSO Web UI configuration
 
-Login to Nextcloud as the system administrator.
+Login to Nextcloud as the system administrator. 
 
-Prepare your Nextcloud instance for SSO & SAML Authentication. Enable APP called **SSO & SAML Authentication**.
+Navigate to the Apps section, this would be located under username in upper right corner, click Apps.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/60493504-42c8-4ff3-b060-9f4785ab898f)
+
+Copy && Paste **SSO & SAML Authentication** in the search bar.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/394f0f67-7938-4982-968d-055e4bb93959)
+
+
+Download && Enable APP called **SSO & SAML Authentication**.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/98791b47-3940-40b1-87ab-1888d3cbf516)
+
 
 Navigate to Administrator settings and left pane scroll down to **SSO & SAML Authentication**.
 
-The following setting need to be configured.
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/f86a53b2-1bf6-4931-87b4-130393157b99)
 
-  * Allow the use of multiple user back-ends (e.g. LDAP) = Enable
+Choose the Use built-in SAML authentication button.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/ceff1cd7-2471-4054-8992-3ee483c1b095)
+
+## Prepare your Nextcloud instance for SSO & SAML Authentication.
+The following setting need to be configured. Enable the following.
+
+  * Allow the use of multiple user back-ends (testing)
   * Attribute to map the UID = UserName
     
 -------------Identity Provider Data---------------
