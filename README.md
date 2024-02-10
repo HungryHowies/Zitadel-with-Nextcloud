@@ -359,18 +359,36 @@ Choose the Use built-in SAML authentication button.
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/ceff1cd7-2471-4054-8992-3ee483c1b095)
 
 ## Prepare your Nextcloud instance for SSO & SAML Authentication.
+
 The following setting need to be configured. Enable the following.
 
   * Allow the use of multiple user back-ends (testing)
   * Attribute to map the UID = UserName
-    
--------------Identity Provider Data---------------
-  * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/metadata
-  * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SSO
-  * https://zabbix-4rkfxx.zitadel.cloud/saml/v2/SLO
+The following the endpoints are added to Zitadel server FQDN and/or IP Address
 
-Insert Zitadel Key.
-!!!!  Discrobe how-to get from zitadel 
+ ```/saml/v2/metadata```
+ ``` /saml/v2/SSO```
+ ``` /saml/v2/SLO```.
+ 
+These are alos found after create a new Project for Nextcloud.
+-------------Identity Provider Data---------------
+  * https://zitadel.domain.com/saml/v2/metadata
+  * https://zitadel.domain.com/saml/v2/SSO
+  * https://zitadel.domain.com/saml/v2/SLO
+
+Using the end point **/saml/v2/metadata/** and place it on the end of Zitadel server name. 
+
+Example:
+```
+https://zitadel.com/saml/v2/metadata.
+```
+The certificate from Zitadel. Copy the third certificate from the top.
+Navigate to Nextcloud SAMl section called "Identity Provider Data" in the section called  Public X.509 certificate of the idp. Then paste it in the box as shown below (HERE).
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/badd6b50-de2a-4a29-9e37-4807a905716f)
+
+Example:
+
 ```
 -- Public X.509 certificate of the idp ---
 MIIFIjCCAwqgAwIBAgICAxwwDQYJKoZIhvcNAQELBQAwLDEQMA4GA1UEChMHWklUQURFTDEYMBYGA1UEAxMPWklUQURFTC
@@ -395,6 +413,7 @@ aWnxeKtMn/UvE1I7PsgDcvm/a+TR48YW0k+yYegXktGeQxurA/aZqSjSBc55kfDR8A==
 ```
 
 Bottom of the page click the **Download metadata XML** button, this will be uploaded to Zitadel Project called Nextcloud.
+
 You should also see a Green metadata valid next to download.
 
 
