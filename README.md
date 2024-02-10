@@ -209,6 +209,29 @@ Login to the NextCloud site file. Adjust configuration as needed.
 ```
 vi /etc/apache2/sites-available/nextcloud.conf
 ```
+Add following lines on top of nextcloud.conf file
+```
+<VirtualHost *:80>
+      ServerName nextcloud.domain.com
+      Redirect / https://nextcloud.domain.com/
+</VirtualHost>
+```
+
+Adjust the line Documentroot section.
+
+```
+DocumentRoot /var/www/nextcloud
+```
+
+Add Directory section.
+
+```
+<Directory "/var/www/nextcloud">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+</Directory>
+```
 
 Nextcloud Site example.
 
