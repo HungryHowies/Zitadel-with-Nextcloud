@@ -412,6 +412,7 @@ These are also found after creating a new Project in Zitadel.
 Using the end point **/saml/v2/metadata/** and place it on the end of Zitadel server name. This will show the certificate/s needed.
 
 Example:
+
 ```
 https://zitadel.com/saml/v2/metadata.
 ```
@@ -419,6 +420,7 @@ Copy the third certificate from the top. Navigate to Nextcloud SAMl section call
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/badd6b50-de2a-4a29-9e37-4807a905716f)
 
+Public X.509 certificate of the IdP: Copy the certificate from the texteditor. You will need to add -----BEGIN CERTIFICATE----- in front of the key and -----END CERTIFICATE----- to the end of it.
 Example:
 
 ```
@@ -443,39 +445,33 @@ EaWuudlsip+55qJ6J0IIaOMagTu04UK6UTOpan9NKSvQSEFyooyGL+dSv8/WkOexEgy/62k41KlcjNMG
 6HSF1B3WB+6MmNck7LSmSCm46v2wbNoQrSTBaiCHIEx0NFzTALG0ELdDAzivFKS9pBEPyK3McMWXCKYJjReTr5TRFE2FxT
 aWnxeKtMn/UvE1I7PsgDcvm/a+TR48YW0k+yYegXktGeQxurA/aZqSjSBc55kfDR8A==
 ```
+A Green metadata valid next to download.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/d717dc3e-b092-468b-b95b-a767b6015046)
+
 
 Bottom of the page click the **Download metadata XML** button, this will be uploaded to Zitadel Project called Nextcloud.
-
-You should also see a Green metadata valid next to download.
 
 
 ## Zitadel
 
+Log into Zitadel instance.
+
+There are two naming procedures.
+
 Create a project called nextcloud, create an application called nextcloud using SAML.
-Click the button called Upload Metadata XML and upload the XML file from nextcloud.
-Example:
-```
-<?xml version="1.0"?>
-      <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
-          validUntil="2023-10-26T03:08:08Z"
-          cacheDuration="PT604800S"
-          entityID="https://nextcloud.domain.com/index.php/apps/user_saml/saml/metadata">
-<md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false"
-        protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-          Location="https://nextcloud.domain.com/index.php/apps/user_saml/saml/sls" />
-<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameidformat:unspecified</md:NameIDFormat>
-<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-      Location="https://nextcloud.domain.com/index.php/apps/user_saml/saml/acs"
-index="1" />
-  </md:SPSSODescriptor>
-</md:EntityDescriptor>
-```
-## Additional Notes:
 
-Nextcloud Admin Manual.
+Navigate to Organization ---> Projects.
 
-https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html
-https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html#server
-https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html
-https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/index.html
+Click "Create New Project" and set the project name, Click continue.
+
+Under Application click "New".
+
+
+Click the button called **Upload Metadata XML**  and upload the XML file from Nextcloud.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Nextcloud/assets/22652276/cdf31bd3-ddc4-47c5-9481-217dd3f60d03)
+
+Click the Continue button, then click Create.
+
+
