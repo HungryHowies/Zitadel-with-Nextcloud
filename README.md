@@ -1,6 +1,6 @@
 # Zitadel-with-Nextcloud
 
-Installing and configuring Nextcloud  to authenticate with SAML against Zitadel
+Installing and configuring Nextcloud  to authenticate using SAML against Zitadel
 
 ## Overview
 
