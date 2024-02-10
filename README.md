@@ -186,19 +186,35 @@ Restart Apache2
 systemctl restart apache2
 ```
 
-Disable site
+Disable site's
 
 ```
 sudo a2dissite 000-default.conf
 ```
+Change directory
+```
+/etc/apache2/sites-available
+```
 
-Create NextCloud site and enable it.
+Copy 000-default-le-ssl.conf to nextcloud.conf. This will perserve the configurationtion from Let's encrypt.
+
+```
+cp 000-default-le-ssl.conf nextcloud.conf
+```
+
+Disable site 000-default-le-ssl.conf.
+
+```
+sudo a2dissite 000-default-le-ssl.conf
+```
+
+Adjust configuration needed.
 
 ```
 vi /etc/apache2/sites-available/nextcloud.conf
 ```
 
-configure Nextcloud Site.
+Nextcloud Site example. 
 
 ```
 <VirtualHost *:80>
@@ -234,9 +250,10 @@ Enable Nextlcoud site
 ```
 sudo a2ensite nextcloud
 ```
+
 Use the occ command to complete your installation. This takes the place of running the graphical Installation Wizard.
 
-Chnage Directory.
+Change Directory.
 
 ```
 cd /var/www/nextcloud/
