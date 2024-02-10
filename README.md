@@ -283,7 +283,7 @@ Execute OCC command and ensure the database and database user are correct. Befor
 ```
 sudo -u www-data php occ  maintenance:install \
 --database='mysql' --database-name='nextcloud' \
---database-user=someuser --database-pass='password' \
+--database-user=username --database-pass='password' \
 --admin-user='admin' --admin-pass='password'
 ```
 
