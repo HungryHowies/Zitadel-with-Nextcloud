@@ -14,6 +14,17 @@ ip a
 ```
 Configure apache2 configuration file
 ```
+vi /etc/apache2/apache2.conf
+```
+Adjust "ServerNAme" to match the new IP Address.
+
+```
+ServerName <ip-address>
+```
+
+Adjust the nextcloud.conf file for Apache2.
+
+```
 vi /etc/apache2/sites-available/nextcloud.conf
 ```
 Edit the following lines. Take note, you may have two lines with ServerName for port  80 and Port 443.
