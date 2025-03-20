@@ -406,7 +406,7 @@ In the section called **Identity Provider Data**.
 Identifier of the idp entity URL. 
  
  ```
-https://nextcloud.domain.com/index.php/apps/user_saml/saml/metadata
+ https://zitadel.domain.com/saml/v2/metadata
  ```
 
 Add Zitadel SSO URL in section called "URL Target of the idp when the SP will sen the authentication Request Message".
