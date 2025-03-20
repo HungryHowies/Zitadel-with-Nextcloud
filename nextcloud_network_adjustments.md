@@ -38,3 +38,14 @@ Restart apache2 service.
 ```
 Systemctl restart apache2
 ```
+Login to the Web UI with Admin credentials. 
+Adjust the line  for logging out  with the SSO user/s.
+```
+URL Location of the IdP where the SP will send the SLO Request.
+```
+```
+https://<ip-address>/
+```
+Remove the NextCloud App in Zitadel and download the new XML from NextCloud then upload it into Zitadel ensuring your using SAML Application in Zitadel.
+ 
+
