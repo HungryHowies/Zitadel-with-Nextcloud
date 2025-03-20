@@ -415,10 +415,17 @@ Add Zitadel SSO URL in section called "URL Target of the idp when the SP will se
  https://zitadel.domain.com/saml/v2/SSO
 ```
  
- Add Zitadel SLO URL in this section called "URL Location of the idp where the SP will send the SLO Reuqest".
- 
- ```
- https://zitadel.domain.com/saml/v2/SLO
+Add Zitadel SLO URL in this section called "URL Location of the idp where the SP will send the SLO Reuqest".
+
+NOTE: This did not work when logging out, ERROR known XML file.
+
+```
+https://zitadel.domain.com/saml/v2/SLO
+```
+I placed the Nextcloud URL in its place. This worked as expected.
+
+```
+https://nextcloud.domain.com
 ```
  
 These are also found after creating a new Project in Zitadel.
