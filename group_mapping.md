@@ -16,7 +16,7 @@ Key = Admins
 Value = admin
 ```
 Authorizations in the Project called Nextcloud. 
-Click on New button and Slect User needed. Click Continue then save.
+Click on New button and Select User needed. Click Continue then save.
 
 
 In NextCloud Web UI under SSO & SAML  section scroll down to "Attribute mapping".
