@@ -1,17 +1,20 @@
 ### Group Mapping 
-Create a role in NextCloud project by clicking on the Project  NextCloud. On the left pane click on Roles.
-Click the new button  and add the following.
+Create a role in Zitadel in NextCloud Project by clicking on the Project NextCloud. On the left pane click on Roles.
+Click the new button and add the following.
 ```
-Key = Groups
-Display Name = Groups
+Key = Admins
+Display Name = admin
 Group = admin
 ```
 Save and close.
 
+Edit Zitadel User metadata.
+Click on the user that should have Admin rights. On the left pane click on Metadata.
+Add the following.
+```
+Key = Admins
+Value = admin
+```
+
 In NextCloud Web UI under SSO & SAML  section scroll down to "Attribute mapping".
-* Attribute to map the users groups to:
-  
-  Groups
-* Group Mapping Prefix, default: SAML:
-  
-  admin
+* Attribute to map the users groups to: Admins
